@@ -1,69 +1,88 @@
 import 'package:flutter/material.dart';
+import '../models/plant.dart';
 
-class MovieSlider extends StatelessWidget {
-  // const MovieSlider({Key? key}) : super(key: key);
+class PlantSlider extends StatelessWidget {
+  final List<Plant> plants;
+  final String? title;
+
+  const PlantSlider({
+    Key? key,
+    required this.plants,
+    this.title,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      height: 280,
-      // color: Colors.red,
+      height: 260,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text('Populars',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          ),
+          if (title != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              child: Text(
+                title!,
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
           const SizedBox(height: 5),
           Expanded(
             child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 20,
-                itemBuilder: (_, int index) => _MoviePoster()),
-          )
+              scrollDirection: Axis.horizontal,
+              itemCount: plants.length,
+              itemBuilder: (_, int index) => _PlantPoster(plant: plants[index]),
+            ),
+          ),
         ],
       ),
     );
   }
 }
 
-class _MoviePoster extends StatelessWidget {
-  const _MoviePoster({Key? key}) : super(key: key);
+class _PlantPoster extends StatelessWidget {
+  final Plant plant;
+
+  const _PlantPoster({required this.plant});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 130,
-      // color: Colors.green,
+      height: 190,
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
           GestureDetector(
-            onTap: () => Navigator.pushNamed(context, 'details',
-                arguments: 'detalls peli'),
+            onTap: () => Navigator.pushNamed(context, 'details', arguments: plant),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: FadeInImage(
-                placeholder: AssetImage('assets/no-image.jpg'),
-                image: NetworkImage('https://placehold.co/300x400/png'),
+                placeholder: const NetworkImage('[suspicious link removed]'),
+                image: NetworkImage(plant.fullImageUrl),
                 width: 130,
-                height: 190,
+                height: 170,
                 fit: BoxFit.cover,
+                imageErrorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    width: 130,
+                    height: 170,
+                    color: Colors.grey.shade300,
+                    child: const Icon(Icons.eco, size: 40, color: Colors.green),
+                  );
+                },
               ),
             ),
           ),
-          const SizedBox(
-            height: 5,
-          ),
+          const SizedBox(height: 5),
           Text(
-            'Star Wars: El retorno del Jedi',
+            plant.commonName,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-          )
+            style: const TextStyle(fontSize: 12),
+          ),
         ],
       ),
     );
