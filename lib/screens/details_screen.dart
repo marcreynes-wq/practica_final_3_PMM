@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/widgets/widgets.dart';
+import 'package:practica_final_3_PMM/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
+  const DetailsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     // TODO: Canviar després per una instància de Peli
@@ -39,20 +41,20 @@ class _CustomAppBar extends StatelessWidget {
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
-        titlePadding: EdgeInsets.all(0),
+        titlePadding: const EdgeInsets.all(0),
         title: Container(
           width: double.infinity,
           alignment: Alignment.bottomCenter,
           color: Colors.black12,
           padding: const EdgeInsets.only(bottom: 10),
-          child: Text(
+          child: const Text(
             'Títol peli',
-            style: TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           ),
         ),
-        background: FadeInImage(
-          placeholder: AssetImage('assets/loading.gif'),
-          image: NetworkImage('https://placehold.co/500x300/png'),
+        background: const FadeInImage(
+          placeholder: const AssetImage('assets/loading.gif'),
+          image: const NetworkImage('https://placehold.co/500x300/png'),
           fit: BoxFit.cover,
         ),
       ),
@@ -71,9 +73,9 @@ class _PosterAndTitile extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: FadeInImage(
-              placeholder: AssetImage('assets/loading.gif'),
-              image: NetworkImage('https://placehold.co/200x300/png'),
+            child: const FadeInImage(
+              placeholder: const AssetImage('assets/loading.gif'),
+              image: const NetworkImage('https://placehold.co/200x300/png'),
               height: 150,
             ),
           ),
